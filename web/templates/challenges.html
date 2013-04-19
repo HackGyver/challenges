@@ -1,0 +1,23 @@
+<html>
+    <body>
+        <div>
+            {% if challenges %}
+                <ul>
+                {% for category in challenges.categories.all()|sort %}
+                    <li>
+                        {{ category.name }}
+                        <ul>
+                            {% for challenge in category.challenges.all() %}
+                            <li>{{ challenge.title }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No challenge found.</p>
+            {% endif %}
+        </div>
+    </body>
+</html>
+
