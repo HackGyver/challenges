@@ -16,6 +16,13 @@ categories = db.Table('categories',
 )
 
 
+# Many-to-many relationship between Tag and Challenge
+tags = db.Table('tags',
+        db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
+        db.Colmun('challenge_id', db.Integer, db.ForeignKey('challenge.id'))
+)
+
+
 class User(db.Model):
     __tablename__= 'users'
 
@@ -53,6 +60,9 @@ class Challenge(db.Model):
     categories = db.relationship('Category', secondary=categories,
             backref=db.backref('challenges', lazy='dynamic'))
 
+    tags = db.relationship('Tag', secondary=tags,
+            backref=db.backref('challenges', lazy='dynamic'))
+
     def __repr__(self):
         return "<Challenge('%s')>" % (self.title)
 
@@ -65,6 +75,15 @@ class Category(db.Model):
 
     def __repr__(self):
         return "<Category('%s')>" % (self.name)
+
+
+class Tag(db.Model):
+    __tablename__ = 'tags'
+    id = db.Column(db.Integer, primary_key=True)
+    label = db.Column(db.String(64))
+
+    def __repr__(self):
+        return "<Tag('%s')>" % (self.label)
 
 
 # Creation of the database
