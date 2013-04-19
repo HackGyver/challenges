@@ -1,4 +1,4 @@
-# -*- cpding: utf-8 *-*
+# -*- coding: utf-8 *-*
 """
 
     Definition of all the routes for Challenge
