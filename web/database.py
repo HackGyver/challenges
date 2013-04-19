@@ -50,6 +50,7 @@ class Challenge(db.Model):
     title = db.Column(db.String(64), nullable=False)
     description = db.Column(db.Text)
     level = db.Column(db.Integer, nullable=False)
+    requirement = db.Column(db.Integer)
     flag = db.Column(db.String(256), nullable=False)
     url = db.Column(db.String(256), nullable=False)
 
