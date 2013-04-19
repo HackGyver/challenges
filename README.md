@@ -14,11 +14,11 @@ This portal uses Flask, SQLAlchemy, WTF and Login.
 Configuration
 ------------
 
-1. Clone the repo:
+1. Clone the repo
 2. Install the dependencies:
-> * pip install Flask
-> * pip install Flask-SQLAlchemy
-> * pip install Flask-Wtf
-> * pip install Flask-Login
+    * pip install Flask
+    * pip install Flask-SQLAlchemy
+    * pip install Flask-Wtf
+    * pip install Flask-Login
 3. Start the server with:
-> python2.7 runserver.py
+    * python2.7 runserver.py
