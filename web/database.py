@@ -19,13 +19,11 @@ categories = db.Table('categories',
 # Many-to-many relationship between Tag and Challenge
 tags = db.Table('tags',
         db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
-        db.Colmun('challenge_id', db.Integer, db.ForeignKey('challenge.id'))
+        db.Column('challenge_id', db.Integer, db.ForeignKey('challenge.id'))
 )
 
 
 class User(db.Model):
-    __tablename__= 'users'
-
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), nullable=False, unique=True)
     password = db.Column(db.String(256), nullable=False)
@@ -48,8 +46,6 @@ class User(db.Model):
 
 
 class Challenge(db.Model):
-    __tablename__ = 'challenges'
-
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64), nullable=False)
     description = db.Column(db.Text)
@@ -68,8 +64,6 @@ class Challenge(db.Model):
 
 
 class Category(db.Model):
-    __tablename__ = 'categories'
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
 
@@ -78,7 +72,6 @@ class Category(db.Model):
 
 
 class Tag(db.Model):
-    __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True)
     label = db.Column(db.String(64))
 
