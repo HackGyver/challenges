@@ -1,0 +1,13 @@
+<div>
+    <ul>
+        {#
+        {% for endpoint, caption in [
+            ('index'), 'Index',
+            ('show_challenges'), 'Challenges',
+            ('show_categories'), 'Categories',
+            ('show_scoreboard'), 'Score board',
+        ] %}
+        <li {% if endpoint == request.endpoint %}class="active"[% endif %}><a href="{{ url_for(endpoint) }}">{{ caption }}</a></li>
+        #}
+    </ul>
+</div>
