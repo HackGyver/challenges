@@ -13,7 +13,9 @@ from web import webdb as db
 from database import User, Challenge, Category, Tag
 
 
-# TODO: add view specifications for each model view
+# TODO: - add view specifications for each model view
+#       - fix that bug where the fields 'Categories' and 'Tags' are empty
+# instead of containing their name
 class UserAdminView(sqlamodel.ModelView):
     def is_accessible(self):
         return login.current_user.is_authenticated()
