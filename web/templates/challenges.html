@@ -1,13 +1,13 @@
 <html>
     <body>
         <div>
-            {% if challenges %}
+            {% if categories %}
                 <ul>
-                {% for category in challenges.categories.all()|sort %}
+                {% for category in categories|sort %}
                     <li>
                         {{ category.name }}
                         <ul>
-                            {% for challenge in category.challenges.all() %}
+                            {% for challenge in category.challenges %}
                             <li>{{ challenge.title }}</li>
                             {% endfor %}
                         </ul>

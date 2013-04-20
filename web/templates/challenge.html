@@ -3,6 +3,10 @@
         <div>
             {% if challenge %}
                 <h1>{{ challenge.title }}</h1>
+                <p>Belongs to: 
+                {% for category in challenge.categories %}
+                    {{ category.name }}
+                {% endfor %}
             {% else %}
                 <p>Challenge not found</p>
             {% endif %}

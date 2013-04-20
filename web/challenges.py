@@ -7,18 +7,18 @@
 
 
 from flask import render_template
-from web.database import Challenge
+from web.database import Challenge, Category
 from web import webapp
 from web import webdb as db
 
 
 @webapp.route('/challenges/')
 def show_challenges():
-    """Query all the challenges"""
+    """Query all the categories (which contains the challenges)"""
 
-    challenges = db.session.query(Challenge).all()
+    categories = db.session.query(Category).all()
 
-    return render_template('challenges.html', challenges=challenges)
+    return render_template('challenges.html', categories=categories)
 
 
 @webapp.route('/challenges/<int:id>')
