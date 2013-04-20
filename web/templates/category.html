@@ -1,19 +1,21 @@
-<html>
-    <body>
-        <div>
-        {% if categorie %}
-            <h1>{{ categorie.name }}</h1>
-            {% if categorie.challenges.all()|length %}
-            <ul>
-                {% for challenge in categorie.challenges.all() %}
-                <li>{{ challenge.title }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        {% else %}
-            <p>The category doesn't exist</p>
-        {% endif %}
-        </div>
-    </body>
-</html>
+{% extends "_layout.html" %}
+
+{% block title %}Category{% endblock %}
+
+{% block body %}
+<div>
+{% if category %}
+    <h1>{{ category.name }}</h1>
+    {% if category.challenges.all()|length %}
+    <ul>
+        {% for challenge in category.challenges %}
+            <li>{{ challenge.title }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% else %}
+    <p>The category doesn't exist</p>
+{% endif %}
+</div>
+{% endblock %}
 
