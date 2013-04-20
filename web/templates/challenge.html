@@ -1,16 +1,18 @@
-<html>
-    <body>
-        <div>
-            {% if challenge %}
-                <h1>{{ challenge.title }}</h1>
-                <p>Belongs to: 
-                {% for category in challenge.categories %}
-                    {{ category.name }}
-                {% endfor %}
-            {% else %}
-                <p>Challenge not found</p>
-            {% endif %}
-        </div>
-    </body>
-</html>
+{% extends "_layout.html" %}
+
+{% block title %}Challenge{% endblock %}
+
+{% block body %}
+<div>
+    {% if challenge %}
+        <h1>{{ challenge.title }}</h1>
+        <p>Belongs to: 
+        {% for category in challenge.categories %}
+            {{ category.name }}
+        {% endfor %}
+    {% else %}
+    <p>Challenge not found</p>
+    {% endif %}
+</div>
+{% endblock %}
 

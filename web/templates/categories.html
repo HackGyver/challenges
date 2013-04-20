@@ -1,16 +1,18 @@
-<html>
-    <body>
-        <div>
-            {% if categories %}
-            <ul>
-                {% for categorie in categories %}
-                <li>{{ categorie.name }}</li>
-                {% endfor %}
-            </ul>
-            {% else %}
-            <p>No category found</p>
-            {% endif %}
-        </div>
-    </body>
-</html>
+{% extends "_layout.html" %}
+
+{% block title %}Categories{% endblock %}
+
+{% block body %}
+<div>
+    {% if categories %}
+    <ul>
+        {% for categorie in categories %}
+            <li>{{ categorie.name }}</li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p>No category found</p>
+    {% endif %}
+</div>
+{% endblock %}
 

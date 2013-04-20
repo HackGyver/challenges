@@ -1,23 +1,25 @@
-<html>
-    <body>
-        <div>
-            {% if categories %}
+{% extends "_layout.html" %}
+
+{% block title %}Challenges{% endblock %}
+
+{% block body %}
+<div>
+    {% if categories %}
+        <ul>
+        {% for category in categories|sort %}
+            <li>
+                {{ category.name }}
                 <ul>
-                {% for category in categories|sort %}
-                    <li>
-                        {{ category.name }}
-                        <ul>
-                            {% for challenge in category.challenges %}
-                            <li>{{ challenge.title }}</li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% endfor %}
+                    {% for challenge in category.challenges %}
+                        <li>{{ challenge.title }}</li>
+                    {% endfor %}
                 </ul>
-            {% else %}
-                <p>No challenge found.</p>
-            {% endif %}
-        </div>
-    </body>
-</html>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No challenge found.</p>
+    {% endif %}
+</div>
+{% endblock %}
 
