@@ -25,6 +25,9 @@ class ChallengeAdminView(sqlamodel.ModelView):
     def is_accessible(self):
         return login.current_user.is_authenticated()
 
+    # Invisible column in the list view
+    column_exclude_list = ['description']
+
     def __init__(self, session):
         super(ChallengeAdminView, self).__init__(Challenge, session)
 
