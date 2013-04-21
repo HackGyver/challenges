@@ -6,8 +6,9 @@
 <div>
     {% if categories %}
     <ul>
-        {% for categorie in categories %}
-            <li>{{ categorie.name }}</li>
+        {% for category in categories %}
+        <li><a href="{{ url_for('show_categories') }}{{ category.id }}">{{
+            category.name }}</a></li>
     {% endfor %}
     </ul>
     {% else %}
