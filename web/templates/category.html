@@ -9,7 +9,8 @@
     {% if category.challenges.all()|length %}
     <ul>
         {% for challenge in category.challenges %}
-            <li>{{ challenge.title }}</li>
+        <li><a href="{{ url_for('show_challenges') }}{{ challenge.id }}">{{
+            challenge.title }}</a></li>
         {% endfor %}
     </ul>
     {% endif %}

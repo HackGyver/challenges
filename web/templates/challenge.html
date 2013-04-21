@@ -8,7 +8,8 @@
         <h1>{{ challenge.title }}</h1>
         <p>Belongs to: 
         {% for category in challenge.categories %}
-            {{ category.name }}
+        <a href="{{ url_for('show_categories') }}{{ category.id }}">{{
+            category.name }}</a>
         {% endfor %}
     {% else %}
     <p>Challenge not found</p>
