@@ -42,7 +42,7 @@ class User(db.Model):
         return self.id
 
     def __repr__(self):
-        return "<User('%s')>" % (self.username)
+        return "User('%s')" % (self.username)
 
 
 class Challenge(db.Model):
@@ -61,7 +61,7 @@ class Challenge(db.Model):
             backref=db.backref('challenges', lazy='dynamic'))
 
     def __repr__(self):
-        return "<Challenge('%s')>" % (self.title)
+        return "Challenge('%s')" % (self.title)
 
 
 class Category(db.Model):
@@ -69,7 +69,7 @@ class Category(db.Model):
     name = db.Column(db.String(128))
 
     def __repr__(self):
-        return "<Category('%s')>" % (self.name)
+        return "Category('%s')" % (self.name)
 
 
 class Tag(db.Model):
@@ -77,7 +77,7 @@ class Tag(db.Model):
     label = db.Column(db.String(64))
 
     def __repr__(self):
-        return "<Tag('%s')>" % (self.label)
+        return "Tag('%s')" % (self.label)
 
 
 # Creation of the database

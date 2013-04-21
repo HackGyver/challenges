@@ -29,3 +29,4 @@ import web.database
 import web.login
 import web.categories
 import web.challenges
+import web.admin
