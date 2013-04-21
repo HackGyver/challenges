@@ -8,10 +8,12 @@
         <ul>
         {% for category in categories|sort %}
             <li>
-                {{ category.name }}
+            <a href="{{ url_for('show_categories') }}{{ category.id }}">{{
+                category.name }}</a>
                 <ul>
                     {% for challenge in category.challenges %}
-                        <li>{{ challenge.title }}</li>
+                    <li><a href="{{ url_for('show_challenges') }}{{
+                        challenge.id }}">{{ challenge.title }}</a></li>
                     {% endfor %}
                 </ul>
             </li>
