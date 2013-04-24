@@ -7,6 +7,7 @@
 
 
 from flask import render_template
+from flask.ext import login
 from web.database import Challenge, Category
 from web import webapp
 from web import webdb as db
@@ -27,4 +28,7 @@ def show_challenge(id):
 
     challenge = db.session.query(Challenge).filter(Challenge.id==id).first()
 
-    return render_template('challenge.html', challenge=challenge)
+    return render_template('challenge.html',
+            challenge=challenge,
+            user=login.current_user
+    )

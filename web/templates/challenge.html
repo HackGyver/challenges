@@ -6,13 +6,28 @@
 <div>
     {% if challenge %}
         <h1>{{ challenge.title }}</h1>
-        <p>Belongs to: 
-        {% for category in challenge.categories %}
-        <a href="{{ url_for('show_categories') }}{{ category.id }}">{{
-            category.name }}</a>
-        {% endfor %}
+        {% if user %}
+            <p>Published by: 
+            {% for user in challenge.users %}
+                {{ user.username }}
+            {% endfor %}
+            </p>
+        {% endif %}
+
+        {% if challenge.categories %}
+            <p>Belongs to: 
+            {% for category in challenge.categories %}
+                <a href="{{ url_for('show_categories') }}{{ category.id }}">{{ category.name }}</a>
+            {% endfor %}
+            </p>
+        {% endif %}
+
+        {% if user and user.is_authenticated() and user in challenge.users %}
+            {% include "_manage_challenge.html" %}
+        {% endif %}
+
     {% else %}
-    <p>Challenge not found</p>
+        <p>Challenge not found</p>
     {% endif %}
 </div>
 {% endblock %}
