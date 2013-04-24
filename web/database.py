@@ -9,6 +9,12 @@
 from web import webdb as db
 
 
+# Many-to-many relationship between User and Challenge
+challenges = db.Table('challenges',
+        db.Column('challenge_id', db.Integer, db.ForeignKey('challenge.id')),
+        db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+)
+
 # Many-to-many relationship between Category and Challenge
 categories = db.Table('categories',
         db.Column('category_id', db.Integer, db.ForeignKey('category.id')),
@@ -27,6 +33,8 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), nullable=False, unique=True)
     password = db.Column(db.String(256), nullable=False)
+    challenges = db.relationship('Challenge', secondary=challenges,
+            backref=db.backref('users', lazy='dynamic'))
 
     # Flask-Login integration
     def is_authenticated(self):
