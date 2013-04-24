@@ -6,7 +6,7 @@
 """
 
 
-from flask import request, render_template
+from flask import request, render_template, redirect, url_for
 from flask.ext import wtf, login
 from web.database import Challenge, Category, Tag
 from web import webapp
@@ -104,6 +104,9 @@ def show_challenge(id):
 
 @webapp.route('/challenges/new/', methods=['GET', 'POST'])
 def manage_challenge():
+    if not login.current_user.is_authenticated():
+        return redirect(url_for('index'))
+
     form = NewChallengeForm(request.form)
     if form.validate_on_submit():
         form.apply_request()
