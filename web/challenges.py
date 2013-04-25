@@ -54,6 +54,22 @@ class ManageChallengeForm(wtf.Form):
     )
 
     def validate(self):
+        if not self.title or not self.title.data:
+            self.title.errors = tuple(['This field is required.'])
+            return False
+
+        if not self.level or not self.level.data:
+            self.level.errors = tuple(['This field is required.'])
+            return False
+
+        if not self.flag or not self.flag.data:
+            self.flag.errors = tuple(['This field is required.'])
+            return False
+
+        if not self.url or not self.url.data:
+            self.url.errors = tuple(['This field is required.'])
+            return False
+
         if self.id.data \
                 and literal_eval(self.id.data):
             challenge = db.session.query(Challenge).filter_by(id=self.id.data).first()
