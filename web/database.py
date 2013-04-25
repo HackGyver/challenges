@@ -55,7 +55,7 @@ class User(db.Model):
 
 class Challenge(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64), nullable=False)
+    title = db.Column(db.String(256), nullable=False)
     description = db.Column(db.Text)
     level = db.Column(db.Integer, nullable=False)
     requirement = db.Column(db.Integer)
