@@ -6,7 +6,7 @@
 """
 
 
-from flask import request, render_template, redirect, url_for
+from flask import request, render_template, redirect, url_for, flash
 from flask.ext import wtf, login
 from web import webapp
 from web import webdb as db
@@ -75,6 +75,7 @@ def login_view():
     if form.validate_on_submit():
         user = form.get_user()
         login.login_user(user)
+        flash('You were logged in')
         return redirect(url_for('index'))
 
     return render_template('form.html', form=form)
@@ -92,6 +93,7 @@ def register_view():
         db.session.commit()
 
         login.login_user(user)
+        flash('You were registered')
         return redirect(url_for('index'))
 
     return render_template('form.html', form=form)
@@ -100,6 +102,7 @@ def register_view():
 @webapp.route('/logout/')
 def logout_view():
     login.logout_user()
+    flash('You were logged out')
     return redirect(url_for('index'))
 
 
