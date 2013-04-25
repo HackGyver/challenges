@@ -6,11 +6,130 @@
 """
 
 
-from flask import render_template
-from flask.ext import login
-from web.database import Challenge, Category
+from ast import literal_eval
+from flask import request, render_template, redirect, url_for, flash
+from flask.ext import wtf, login
+from web.database import Challenge, Category, Tag
 from web import webapp
 from web import webdb as db
+
+
+class ManageChallengeForm(wtf.Form):
+    id = wtf.HiddenField('', [
+        wtf.validators.Required()
+    ])
+    title = wtf.TextField('Title', [
+        wtf.validators.Required(),
+        wtf.validators.Length(max=64)
+    ])
+    description = wtf.TextAreaField('Description')
+    # TODO:
+    #   -field must be a number
+    #   -number must be a valid level value
+    level = wtf.SelectField('Level', [
+            wtf.validators.Required(),
+            wtf.validators.Length(max=1)
+        ],
+        choices=[(i, i) for i in range(1, 6)],
+    )
+    # TODO:
+    #   -field must be a number
+    #   -number must be a valid challenge id
+    requirement = wtf.TextField('Requirement')
+    flag = wtf.TextField('Flag', [
+        wtf.validators.Required(),
+        wtf.validators.Length(max=256)
+    ])
+    url = wtf.TextField('URL', [
+        wtf.validators.Required(),
+        wtf.validators.Length(max=256)
+    ])
+    categories = wtf.SelectField('Categories',
+        choices=[(categorie.id, categorie.name) \
+            for categorie in db.session.query(Category).all()]
+    )
+    tags = wtf.SelectField('Tags',
+        choices=[(tag.id, tag.label) \
+            for tag in db.session.query(Tag).all()]
+    )
+
+    def validate(self):
+        if not self.title or not self.title.data:
+            self.title.errors = tuple(['This field is required.'])
+            return False
+
+        if not self.level or not self.level.data:
+            self.level.errors = tuple(['This field is required.'])
+            return False
+
+        if not self.flag or not self.flag.data:
+            self.flag.errors = tuple(['This field is required.'])
+            return False
+
+        if not self.url or not self.url.data:
+            self.url.errors = tuple(['This field is required.'])
+            return False
+
+        if self.id.data \
+                and literal_eval(self.id.data):
+            challenge = db.session.query(Challenge).filter_by(id=self.id.data).first()
+            if not challenge:
+                self.id.errors = tuple(['Unknow challenge'])
+                return False
+            elif not login.current_user in challenge.users:
+                self.id.errors = tuple([
+                    'You are not the author of the challenge'
+                ])
+                return False
+
+        if self.categories.data \
+                and literal_eval(self.categories.data):
+            for id in self.categories.data:
+                if not db.session.query(Category).filter_by(id=id).first():
+                    self.categories.errors = tuple([
+                        'Unknown category'
+                    ])
+                    return False
+
+        if self.tags.data and self.tags.data != 'None' \
+                and literal_eval(self.tags.data):
+            for id in self.tags.data:
+                if not db.session.query(Tag).filter_by(id=id).first():
+                    self.tags.errors = tuple([
+                        'Unknow tag'
+                    ])
+                    return False
+        return True
+
+    def apply_request(self):
+        new_challenge = None
+        if self.id.data and literal_eval(self.id.data):
+            new_challenge = \
+                    db.session.query(Challenge).filter_by(id=self.id.data).first()
+        if not new_challenge:
+            new_challenge = Challenge()
+        new_challenge.title = self.title.data
+        new_challenge.description = self.description.data
+        new_challenge.level = self.level.data
+        new_challenge.requirement = self.requirement.data
+        new_challenge.flag = self.flag.data
+        new_challenge.url = self.url.data
+        if self.categories.data != 'None' \
+                and literal_eval(self.categories.data):
+            categories = [
+                    db.session.query(Category).filter_by(id=id).first() \
+                            for id in self.categories.data
+            ]
+            new_challenge.categories = categories
+        if self.tags.data != 'None' and literal_eval(self.tags.data):
+            tags = [
+                    db.session.query(Tag).filter_by(id=id).first() \
+                            for id in self.tags.data
+            ]
+            new_challenge.tags = tags
+        new_challenge.users.append(login.current_user)
+        db.session.add(new_challenge)
+        db.session.commit()
 
 
 @webapp.route('/challenges/')
@@ -32,3 +151,42 @@ def show_challenge(id):
             challenge=challenge,
             user=login.current_user
     )
+
+
+@webapp.route('/challenges/new/', methods=['GET', 'POST'])
+def create_challenge():
+    if not login.current_user.is_authenticated():
+        flash('You must be authenticated')
+        return redirect(url_for('index'))
+
+    form = ManageChallengeForm(request.form)
+    if form.validate_on_submit():
+        form.apply_request()
+        flash('New challenges has been created')
+        return redirect(url_for('show_challenges'))
+
+    return render_template('form.html', form=form)
+
+
+@webapp.route('/challenges/edit/<int:id>', methods=['GET', 'POST'])
+def edit_challenge(id):
+    if not login.current_user.is_authenticated():
+        flash('You must be authenticated')
+        return redirect(url_for('index'))
+
+    challenge = db.session.query(Challenge).filter(Challenge.id==id).first()
+    if not challenge:
+        flash('Unknow challenge')
+        return redirect(url_for('index'))
+
+    if not login.current_user in challenge.users:
+        flash("You can't edit this challenge")
+        return redirect(url_for('index'))
+
+    form = ManageChallengeForm(request.form, obj=challenge)
+    if form.validate_on_submit():
+        form.apply_request()
+        flash('Challenge has been edited')
+        return redirect(url_for('show_challenge', id=id))
+
+    return render_template('form.html', form=form)

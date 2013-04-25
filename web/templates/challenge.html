@@ -23,7 +23,7 @@
         {% endif %}
 
         {% if user and user.is_authenticated() and user in challenge.users %}
-            {% include "_manage_challenge.html" %}
+            <a href="{{ url_for('edit_challenge', id=challenge.id) }}">Edit</a>
         {% endif %}
 
     {% else %}
