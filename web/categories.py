@@ -21,10 +21,10 @@ def show_categories():
     return render_template('categories.html', categories=categories)
 
 
-@webapp.route('/categories/<int:id>')
-def show_category(id):
+@webapp.route('/categories/<name>/')
+def show_category(name):
     """Query one specific category"""
 
-    category = db.session.query(Category).filter(Category.id==id).first()
+    category = db.session.query(Category).filter(Category.name==name).first()
 
     return render_template('category.html', category=category)

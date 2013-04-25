@@ -7,7 +7,7 @@
     {% if categories %}
     <ul>
         {% for category in categories %}
-        <li><a href="{{ url_for('show_categories') }}{{ category.id }}">{{
+        <li><a href="{{ url_for('show_categories') }}{{ category.name }}">{{
             category.name }}</a></li>
     {% endfor %}
     </ul>

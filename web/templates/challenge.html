@@ -17,7 +17,7 @@
         {% if challenge.categories %}
             <p>Belongs to: 
             {% for category in challenge.categories %}
-                <a href="{{ url_for('show_categories') }}{{ category.id }}">{{ category.name }}</a>
+                <a href="{{ url_for('show_categories') }}{{ category.name }}">{{ category.name }}</a>
             {% endfor %}
             </p>
         {% endif %}
