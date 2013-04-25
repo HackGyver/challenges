@@ -7,7 +7,7 @@
 
 
 from ast import literal_eval
-from flask import request, render_template, redirect, url_for
+from flask import request, render_template, redirect, url_for, flash
 from flask.ext import wtf, login
 from web.database import Challenge, Category, Tag
 from web import webapp
@@ -156,13 +156,14 @@ def show_challenge(id):
 @webapp.route('/challenges/new/', methods=['GET', 'POST'])
 def create_challenge():
     if not login.current_user.is_authenticated():
-        # TODO: display error message
+        flash('You must be authenticated')
         return redirect(url_for('index'))
 
     form = ManageChallengeForm(request.form)
     if form.validate_on_submit():
         form.apply_request()
-        return 'Ok'
+        flash('New challenges has been created')
+        return redirect(url_for('show_challenges'))
 
     return render_template('form.html', form=form)
 
@@ -170,21 +171,22 @@ def create_challenge():
 @webapp.route('/challenges/edit/<int:id>', methods=['GET', 'POST'])
 def edit_challenge(id):
     if not login.current_user.is_authenticated():
-        # TODO: display error message
+        flash('You must be authenticated')
         return redirect(url_for('index'))
 
     challenge = db.session.query(Challenge).filter(Challenge.id==id).first()
     if not challenge:
-        # TODO: display error message
+        flash('Unknow challenge')
         return redirect(url_for('index'))
 
     if not login.current_user in challenge.users:
-        # TODO: display error message
+        flash("You can't edit this challenge")
         return redirect(url_for('index'))
 
     form = ManageChallengeForm(request.form, obj=challenge)
     if form.validate_on_submit():
         form.apply_request()
-        return 'Ok'
+        flash('Challenge has been edited')
+        return redirect(url_for('show_challenge', id=id))
 
     return render_template('form.html', form=form)
