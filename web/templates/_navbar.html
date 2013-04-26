@@ -1,11 +1,16 @@
-<div>
-    <ul>
-        {% for endpoint, caption in [
-            ('index', 'Index'),
-            ('show_challenges', 'Challenges'),
-            ('show_categories', 'Categories')
-        ] %}
-        <li {% if endpoint == request.endpoint %}class="active"{% endif %}><a href="{{ url_for(endpoint) }}">{{ caption }}</a></li>
-        {% endfor %}
-    </ul>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <span class="brand">HackGyver</span>
+            <ul class="nav">
+            {% for endpoint, caption in [
+                ('index', 'Index'),
+                ('show_challenges', 'Challenges'),
+                ('show_categories', 'Categories')
+            ] %}
+                <li {% if endpoint == request.endpoint %}class="active"{% endif %}><a href="{{ url_for(endpoint) }}">{{ caption }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
