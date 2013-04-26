@@ -1,0 +1,9 @@
+{% if user and user.is_authenticated() %}
+<div class="custom-nav-list">
+    <ul class="nav nav-list">
+        <li class="nav-header">{{ user.username }}</li>
+        <li>My Score</li>
+        <li>My Challenges</li>
+    </ul>
+</div>
+{% endif %}
