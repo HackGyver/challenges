@@ -3,7 +3,7 @@
 {% block title %}Index{% endblock %}
 
 {% block body %}
-<div>
+<div class="container">
     {% if user and user.is_authenticated() %}
         <h1>Hello {{ user.username }}!</h1>
     {% else %}

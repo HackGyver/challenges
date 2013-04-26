@@ -3,7 +3,7 @@
 {% block title %}Category{% endblock %}
 
 {% block body %}
-<div>
+<div class="container">
 {% if category %}
     <h1>{{ category.name }}</h1>
     {% if category.challenges.all()|length %}

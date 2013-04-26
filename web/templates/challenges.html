@@ -3,24 +3,24 @@
 {% block title %}Challenges{% endblock %}
 
 {% block body %}
-<div>
+<div class="container">
     {% if categories %}
-        <ul>
+    <ul>
         {% for category in categories|sort %}
-            <li>
-            <a href="{{ url_for('show_categories') }}{{ category.id }}">{{
-                category.name }}</a>
-                <ul>
-                    {% for challenge in category.challenges %}
-                    <li><a href="{{ url_for('show_challenges') }}{{
-                        challenge.id }}">{{ challenge.title }}</a></li>
-                    {% endfor %}
-                </ul>
-            </li>
-        {% endfor %}
+        <li>
+        <a href="{{ url_for('show_categories') }}{{ category.id }}">{{
+            category.name }}</a>
+        <ul>
+            {% for challenge in category.challenges %}
+            <li><a href="{{ url_for('show_challenges') }}{{
+                challenge.id }}">{{ challenge.title }}</a></li>
+            {% endfor %}
         </ul>
+        </li>
+        {% endfor %}
+    </ul>
     {% else %}
-        <p>No challenge found.</p>
+    <p>No challenge found.</p>
     {% endif %}
 </div>
 {% endblock %}
