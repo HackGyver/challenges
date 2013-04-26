@@ -5,11 +5,9 @@
 {% block body %}
 <div>
     {% if user and user.is_authenticated() %}
-        Hello {{ user.username }}!
-        <a href="{{ url_for('logout_view') }}">Logout</a>&nbsp;<a href="/admin/">Admin</a>
+        <h1>Hello {{ user.username }}!</h1>
     {% else %}
-        Welcome anonymous user!
-        <a href="{{ url_for('login_view') }}">Login</a>&nbsp;<a href="{{ url_for('register_view') }}">Register</a>
+        <h1>Welcome anonymous user!</h1>
     {% endif %}
 </div>
 {% endblock %}
