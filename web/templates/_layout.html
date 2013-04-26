@@ -13,12 +13,20 @@
     <body>
         {% include "_navbar.html" %}
 
-        {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-error fade in">
-                    {{ message }}
-                </div>
+                {% for category, message in messages %}
+                    {% if category == 'error' %}
+                    <div class="alert alert-error fade in">
+                    {% elif category == 'info' %}
+                    <div class="alert alert-info">
+                    {% elif category == 'success' %}
+                    <div class="alert alert-success fade in">
+                    {% else %}
+                    <div class="alert alert-block fade in">
+                    {% endif %}
+                        {{ message }}
+                    </div>
                 {% endfor %}
             {% endif %}
         {% endwith %}

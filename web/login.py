@@ -75,7 +75,7 @@ def login_view():
     if form.validate_on_submit():
         user = form.get_user()
         login.login_user(user)
-        flash('You were logged in')
+        flash('You were logged in', 'info')
         return redirect(url_for('index'))
 
     return render_template('form.html', form=form)
@@ -93,7 +93,7 @@ def register_view():
         db.session.commit()
 
         login.login_user(user)
-        flash('You were registered')
+        flash('You were registered', 'info')
         return redirect(url_for('index'))
 
     return render_template('form.html', form=form)
@@ -102,7 +102,7 @@ def register_view():
 @webapp.route('/logout/')
 def logout_view():
     login.logout_user()
-    flash('You were logged out')
+    flash('You were logged out', 'info')
     return redirect(url_for('index'))
 
 
