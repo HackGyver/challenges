@@ -7,6 +7,7 @@
 
 
 from flask import render_template
+from flask.ext import login
 from web.database import Category
 from web import webapp
 from web import webdb as db
@@ -18,7 +19,10 @@ def show_categories():
 
     categories = db.session.query(Category).order_by(Category.name).all()
 
-    return render_template('categories.html', categories=categories)
+    return render_template('categories.html',
+            categories=categories,
+            user=login.current_user
+    )
 
 
 @webapp.route('/categories/<name>/')
@@ -27,4 +31,7 @@ def show_category(name):
 
     category = db.session.query(Category).filter(Category.name==name).first()
 
-    return render_template('category.html', category=category)
+    return render_template('category.html',
+            category=category,
+            user=login.current_user
+    )

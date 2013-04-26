@@ -138,7 +138,10 @@ def show_challenges():
 
     categories = db.session.query(Category).all()
 
-    return render_template('challenges.html', categories=categories)
+    return render_template('challenges.html',
+            categories=categories,
+            user=login.current_user
+    )
 
 
 @webapp.route('/challenges/<int:id>')
@@ -157,31 +160,34 @@ def show_challenge(id):
 def create_challenge():
     if not login.current_user.is_authenticated():
         flash('You must be authenticated', 'error')
-        return redirect(url_for('index'))
+        return redirect(url_for('index'), user=login.current_user)
 
     form = ManageChallengeForm(request.form)
     if form.validate_on_submit():
         form.apply_request()
         flash('New challenges has been created', 'success')
-        return redirect(url_for('show_challenges'))
+        return redirect(url_for('show_challenges'), user=login.current_user)
 
-    return render_template('form.html', form=form)
+    return render_template('form.html',
+            form=form,
+            user=login.current_user
+    )
 
 
 @webapp.route('/challenges/edit/<int:id>', methods=['GET', 'POST'])
 def edit_challenge(id):
     if not login.current_user.is_authenticated():
         flash('You must be authenticated', 'error')
-        return redirect(url_for('index'))
+        return redirect(url_for('index'), user=login.current_user)
 
     challenge = db.session.query(Challenge).filter(Challenge.id==id).first()
     if not challenge:
         flash('Unknow challenge', 'warning')
-        return redirect(url_for('index'))
+        return redirect(url_for('index'), user=login.current_user)
 
     if not login.current_user in challenge.users:
         flash("You can't edit this challenge", 'warning')
-        return redirect(url_for('index'))
+        return redirect(url_for('index'), user=login.current_user)
 
     form = ManageChallengeForm(request.form, obj=challenge)
     if form.validate_on_submit():
@@ -189,4 +195,7 @@ def edit_challenge(id):
         flash('Challenge has been edited', 'info')
         return redirect(url_for('show_challenge', id=id))
 
-    return render_template('form.html', form=form)
+    return render_template('form.html',
+            form=form,
+            user=login.current_user
+    )
