@@ -44,10 +44,12 @@ class ManageChallengeForm(wtf.Form):
         wtf.validators.Required(),
         wtf.validators.Length(max=256)
     ])
+    # TODO: enable multiple selection
     categories = wtf.SelectField('Categories',
         choices=[(categorie.id, categorie.name) \
             for categorie in db.session.query(Category).all()]
     )
+    # TODO: enable multiple selection
     tags = wtf.SelectField('Tags',
         choices=[(tag.id, tag.label) \
             for tag in db.session.query(Tag).all()]
@@ -76,7 +78,7 @@ class ManageChallengeForm(wtf.Form):
             if not challenge:
                 self.id.errors = tuple(['Unknow challenge'])
                 return False
-            elif not login.current_user in challenge.users:
+            elif not login.current_user in challenge.authors:
                 self.id.errors = tuple([
                     'You are not the author of the challenge'
                 ])
@@ -127,7 +129,7 @@ class ManageChallengeForm(wtf.Form):
                             for id in self.tags.data
             ]
             new_challenge.tags = tags
-        new_challenge.users.append(login.current_user)
+        new_challenge.authors.append(login.current_user)
         db.session.add(new_challenge)
         db.session.commit()
 
@@ -185,7 +187,7 @@ def edit_challenge(id):
         flash('Unknow challenge', 'warning')
         return redirect(url_for('index'), user=login.current_user)
 
-    if not login.current_user in challenge.users:
+    if not login.current_user in challenge.authors:
         flash("You can't edit this challenge", 'warning')
         return redirect(url_for('index'), user=login.current_user)
 

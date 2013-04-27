@@ -7,7 +7,7 @@
     {% if challenge %}
     <h1>
         {{ challenge.title }}
-        {% if user and user.is_authenticated() and user in challenge.users %}
+        {% if user and user.is_authenticated() and user in challenge.authors %}
         <button class="btn btn-primary btn-small" onclick="location.href = '{{ url_for('edit_challenge', id=challenge.id) }}'">Edit</button>
         {% endif %}
     </h1>
@@ -42,7 +42,7 @@
     <hr />
 
     <p>Published by:
-    {% for user in challenge.users %}
+    {% for user in challenge.authors %}
         {{ user.username }}
     {% endfor %}
     </p>
