@@ -5,20 +5,46 @@
 {% block body %}
 <div class="container">
     {% if categories %}
-    <ul>
-        {% for category in categories|sort %}
-        <li>
-        <a href="{{ url_for('show_categories') }}{{ category.id }}">{{
-            category.name }}</a>
-        <ul>
-            {% for challenge in category.challenges %}
-            <li><a href="{{ url_for('show_challenges') }}{{
-                challenge.id }}">{{ challenge.title }}</a></li>
-            {% endfor %}
-        </ul>
-        </li>
+    <div class="accordion" id="accordion2">
+        {% for category in categories %}
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{ category.id }}">
+                    {{ category.name }}
+                </a>
+            </div>
+
+            <div id="collapse{{ category.id }}" class="accordion-body collapse">
+                <div class="accordion-inner">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Challenge</th>
+                                <th>Level</th>
+                                <th>Requirement</th>
+                                <th>Url</th>
+                                <th>Tags</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for challenge in category.challenges %}
+                            <tr>
+                                <td>
+                                    <a href="{{ url_for('show_challenge', id=challenge.id) }}">{{ challenge.title }}</a>
+                                </td>
+                                <td>{{ challenge.level }}</td>
+                                <td>{{ challenge.requirement }}</td>
+                                <td>{{ challenge.url }}</td>
+                                <td>{{ challenge.tags }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
     {% else %}
     <p>No challenge found.</p>
     {% endif %}
