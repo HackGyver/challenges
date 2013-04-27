@@ -29,6 +29,7 @@
             {{ challenge.description }}
         </p>
         <h2>Url</h2>
+        {% if user and user.is_authenticated() %}
         <p>
             <a href="#">{{ challenge.url }}</a>
         </p>
@@ -37,6 +38,11 @@
             {# TODO: test the flag #}
             <button type="submit" class="btn btn-success" onclick="location.href = '#'">Validate</button>
         </form>
+        {% else %}
+        <p>
+            <a href="{{ url_for('login_view') }}">Login</a>
+        </p>
+        {% endif %}
     </div>
 
     <hr />
