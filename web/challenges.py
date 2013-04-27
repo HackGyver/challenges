@@ -46,8 +46,8 @@ class ManageChallengeForm(wtf.Form):
     ])
     # TODO: enable multiple selection
     categories = wtf.SelectField('Categories',
-        choices=[(categorie.id, categorie.name) \
-            for categorie in db.session.query(Category).all()]
+        choices=[(category.id, category.name) \
+            for category in db.session.query(Category).all()]
     )
     # TODO: enable multiple selection
     tags = wtf.SelectField('Tags',
