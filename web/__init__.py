@@ -31,3 +31,4 @@ import web.categories
 import web.challenges
 import web.admin
 import web.scores
+import web.search

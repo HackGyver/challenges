@@ -1,0 +1,42 @@
+{% extends "_layout.html" %}
+
+{% block title %}Results{% endblock %}
+
+{% block body %}
+<div class="container">
+    {% if results %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Challenge</th>
+                <th>Categories</th>
+                <th>Level</th>
+                <th>Requirement</th>
+                <th>Url</th>
+                <th>Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for challenge in results %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('show_challenge', id=challenge.id) }}">{{ challenge.title }}</a>
+                </td>
+                <td>
+                    categories
+                </td>
+                <td>{{ challenge.level }}</td>
+                <td>{{ challenge.requirement }}</td>
+                <td>{{ challenge.url }}</td>
+                <td>{{ challenge.tags }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-block fade in">
+        No result found
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
