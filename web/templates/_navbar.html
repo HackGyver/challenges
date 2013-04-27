@@ -6,6 +6,7 @@
             {% for endpoint, caption in [
                 ('index', 'Index'),
                 ('show_challenges', 'Challenges'),
+                ('show_scores', 'Scores')
             ] %}
                 <li {% if endpoint == request.endpoint %}class="active"{% endif %}><a href="{{ url_for(endpoint) }}">{{ caption }}</a></li>
             {% endfor %}
