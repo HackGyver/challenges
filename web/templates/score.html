@@ -1,0 +1,69 @@
+{% extends "_layout.html" %}
+
+{% block title %}Score{% endblock %}
+
+{% block body %}
+<div class="container">
+    {% if spe_user %}
+    <div>
+        <h1>{{ spe_user.username }}</h1>
+        <p>Score: {{ score }}</p>
+        <h2>Validated challenges</h2>
+        <div class="accordion" id="accordion2">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse"
+                        data-present="#accordion2"
+                        href="#collapseOne">Validated challenges</a>
+                </div>
+
+                <div id="collapseOne" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Challenge</th>
+                                    <th>Categories</th>
+                                    <th>Level</th>
+                                    <th>Requirement</th>
+                                    <th>Url</th>
+                                    <th>Tags</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for validated in user.validated %}
+                            <tr>
+                                <td>
+                                    <a href="{{ url_for('show_challenge',
+                                        id=validated.id) }}">{{ validated.title
+                                        }}</a>
+                                </td>
+                                <td>
+                                    categories
+                                </td>
+                                <td>
+                                    {{ validated.level }}
+                                </td>
+                                <td>
+                                    {{ validated.requirement }}
+                                </td>
+                                <td>
+                                    {{ validated.url }}
+                                </td>
+                                <td>
+                                    tags
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>User not found</p>
+    {% endif %}
+</div>
+{% endblock %}

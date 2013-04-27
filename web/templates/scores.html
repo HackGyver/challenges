@@ -1,0 +1,31 @@
+{% extends "_layout.html" %}
+
+{% block title %}Scores{% endblock %}
+
+{% block body %}
+<div class="container">
+    {% if users %}
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('show_score', id=user.id) }}">{{
+                            user.username }}</a>
+                    </td>
+                    <td>
+                        {{ scores[user.id] }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </thead>
+    {% endif %}
+</div>
+{% endblock %}
