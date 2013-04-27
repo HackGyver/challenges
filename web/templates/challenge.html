@@ -5,29 +5,50 @@
 {% block body %}
 <div class="container">
     {% if challenge %}
-        <h1>{{ challenge.title }}</h1>
-        {% if user %}
-            <p>Published by: 
-            {% for user in challenge.users %}
-                {{ user.username }}
-            {% endfor %}
-            </p>
-        {% endif %}
-
-        {% if challenge.categories %}
-            <p>Belongs to: 
-            {% for category in challenge.categories %}
-                <a href="{{ url_for('show_categories') }}{{ category.name }}">{{ category.name }}</a>
-            {% endfor %}
-            </p>
-        {% endif %}
-
+    <h1>
+        {{ challenge.title }}
         {% if user and user.is_authenticated() and user in challenge.users %}
-            <a href="{{ url_for('edit_challenge', id=challenge.id) }}">Edit</a>
+        <button class="btn btn-primary btn-small" onclick="location.href = '{{ url_for('edit_challenge', id=challenge.id) }}'">Edit</button>
         {% endif %}
+    </h1>
+
+    {% if challenge.categories %}
+    <hr />
+    <p>Belongs to:
+    {% for category in challenge.categories %}
+        <a href="{{ url_for('show_categories') }}{{ category.name }}">{{ category.name }}</a>
+    {% endfor %}
+    </p>
+    {% endif %}
+
+    <hr />
+
+    <div>
+        <h2>Description</h2>
+        <p>
+            {{ challenge.description }}
+        </p>
+        <h2>Url</h2>
+        <p>
+            <a href="#">{{ challenge.url }}</a>
+        </p>
+        <form class="navbar-form">
+            <input type="text" class="span2 error">
+            {# TODO: test the flag #}
+            <button type="submit" class="btn btn-success" onclick="location.href = '#'">Validate</button>
+        </form>
+    </div>
+
+    <hr />
+
+    <p>Published by:
+    {% for user in challenge.users %}
+        {{ user.username }}
+    {% endfor %}
+    </p>
 
     {% else %}
-        <p>Challenge not found</p>
+    <p>Challenge not found</p>
     {% endif %}
 </div>
 {% endblock %}
