@@ -31,7 +31,7 @@
         <h2>Url</h2>
         {% if user and user.is_authenticated() %}
         <p>
-            <a href="#">{{ challenge.url }}</a>
+            <a href="{{ challenge.url }}">{{ challenge.url }}</a>
         </p>
         <form class="navbar-form">
             <input type="text" class="span2 error">
@@ -49,7 +49,7 @@
 
     <p>Published by:
     {% for user in challenge.authors %}
-        {{ user.username }}
+        <a href="{{ url_for('show_score', id=user.id) }}">{{ user.username }}</a>
     {% endfor %}
     </p>
 

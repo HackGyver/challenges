@@ -34,8 +34,12 @@
                                 </td>
                                 <td>{{ challenge.level }}</td>
                                 <td>{{ challenge.requirement }}</td>
-                                <td>{{ challenge.url }}</td>
-                                <td>{{ challenge.tags }}</td>
+                                <td><a href="{{ challenge.url }}">{{ challenge.url }}</a></td>
+                                <td>
+                                {% for tag in challenge.tags %}
+                                    {{ tag.label }}
+                                {% endfor %}
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
