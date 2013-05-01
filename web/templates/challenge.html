@@ -33,10 +33,9 @@
         <p>
             <a href="{{ challenge.url }}">{{ challenge.url }}</a>
         </p>
-        <form class="navbar-form">
-            <input type="text" class="span2 error">
-            {# TODO: test the flag #}
-            <button type="submit" class="btn btn-success" onclick="location.href = '#'">Validate</button>
+        <form class="navbar-form" method="post" action="{{ url_for('validate_challenge', id=challenge.id) }}">
+            <input type="text" name="flag" class="span2 error">
+            <button type="submit"  class="btn btn-success">Validate</button>
         </form>
         {% else %}
         <p>
