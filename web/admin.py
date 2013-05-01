@@ -13,17 +13,19 @@ from web import webdb as db
 from database import User, Challenge, Category, Tag
 
 
-# TODO: - add view specifications for each model view
 class UserAdminView(sqlamodel.ModelView):
     def is_accessible(self):
-        return login.current_user.is_authenticated()
+        return login.current_user.is_admin()
+
+    # Invisible column in the list view
+    column_exclude_list = ['salt']
 
     def __init__(self, session):
         super(UserAdminView, self).__init__(User, session)
 
 class ChallengeAdminView(sqlamodel.ModelView):
     def is_accessible(self):
-        return login.current_user.is_authenticated()
+        return login.current_user.is_admin()
 
     # Invisible column in the list view
     column_exclude_list = ['description']
@@ -34,7 +36,7 @@ class ChallengeAdminView(sqlamodel.ModelView):
 
 class CategoryAdminView(sqlamodel.ModelView):
     def is_accessible(self):
-        return login.current_user.is_authenticated()
+        return login.current_user.is_admin()
 
     def __init__(self, session):
         super(CategoryAdminView, self).__init__(Category, session)
@@ -42,7 +44,7 @@ class CategoryAdminView(sqlamodel.ModelView):
 
 class TagAdminView(sqlamodel.ModelView):
     def is_accessible(self):
-        return login.current_user.is_authenticated()
+        return login.current_user.is_admin()
 
     def __init__(self, session):
         super(TagAdminView, self).__init__(Tag, session)
@@ -50,7 +52,7 @@ class TagAdminView(sqlamodel.ModelView):
 
 class MyAdminIndexView(admin.AdminIndexView):
     def is_accessible(self):
-        return login.current_user.is_authenticated()
+        return login.current_user.is_admin()
 
 
 # Create admin

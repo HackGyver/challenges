@@ -6,6 +6,7 @@
 """
 
 
+import time
 from web import webdb as db
 
 
@@ -38,6 +39,8 @@ tags = db.Table('tags',
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    admin = db.Column(db.Boolean, default=False)
+    salt = db.Column(db.String(32), default=str(time.time()))
     username = db.Column(db.String(64), nullable=False, unique=True)
     password = db.Column(db.String(256), nullable=False)
 
@@ -52,6 +55,9 @@ class User(db.Model):
     # Flask-Login integration
     def is_authenticated(self):
         return True
+
+    def is_admin(self):
+        return self.admin
 
     def is_active(self):
         return True

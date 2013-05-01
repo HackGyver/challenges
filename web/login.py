@@ -6,6 +6,8 @@
 """
 
 
+import hashlib
+import time
 from flask import request, render_template, redirect, url_for, flash
 from flask.ext import wtf, login
 from web import webapp
@@ -30,7 +32,9 @@ class LoginForm(wtf.Form):
             self.username.errors = tuple(['Unknow username'])
             return False
 
-        if user.password != self.password.data:
+        hash_password = hashlib.sha512()
+        hash_password.update(user.salt + self.password.data)
+        if user.password != hash_password.hexdigest():
             self.password.errors = tuple(['Invalid password'])
             return False
 
@@ -88,6 +92,11 @@ def register_view():
         user = User()
 
         form.populate_obj(user)
+        user.salt = str(time.time())
+
+        hash_password = hashlib.sha512()
+        hash_password.update(user.salt + user.password)
+        user.password = hash_password.hexdigest()
 
         db.session.add(user)
         db.session.commit()
