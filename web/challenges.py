@@ -134,6 +134,7 @@ class ManageChallengeForm(wtf.Form):
         db.session.commit()
 
 
+@webapp.route('/')
 @webapp.route('/categories/')
 @webapp.route('/challenges/')
 def show_challenges():
@@ -175,7 +176,7 @@ def show_challenge(id):
 def create_challenge():
     if not login.current_user.is_authenticated():
         flash('You must be authenticated', 'error')
-        return redirect(url_for('index'), user=login.current_user)
+        return redirect(url_for('show_challenges'), user=login.current_user)
 
     form = ManageChallengeForm(request.form)
     if form.validate_on_submit():
@@ -193,16 +194,16 @@ def create_challenge():
 def edit_challenge(id):
     if not login.current_user.is_authenticated():
         flash('You must be authenticated', 'error')
-        return redirect(url_for('index'), user=login.current_user)
+        return redirect(url_for('show_challenges'), user=login.current_user)
 
     challenge = db.session.query(Challenge).filter(Challenge.id==id).first()
     if not challenge:
         flash('Unknow challenge', 'warning')
-        return redirect(url_for('index'), user=login.current_user)
+        return redirect(url_for('show_challenges'), user=login.current_user)
 
     if not login.current_user in challenge.authors:
         flash("You can't edit this challenge", 'warning')
-        return redirect(url_for('index'), user=login.current_user)
+        return redirect(url_for('show_challenges'), user=login.current_user)
 
     form = ManageChallengeForm(request.form, obj=challenge)
     if form.validate_on_submit():

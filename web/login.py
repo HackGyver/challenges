@@ -76,7 +76,7 @@ def login_view():
         user = form.get_user()
         login.login_user(user)
         flash('You were logged in', 'info')
-        return redirect(url_for('index'))
+        return redirect(url_for('show_challenges'))
 
     return render_template('form.html', form=form)
 
@@ -94,7 +94,7 @@ def register_view():
 
         login.login_user(user)
         flash('You were registered', 'info')
-        return redirect(url_for('index'))
+        return redirect(url_for('show_challenges'))
 
     return render_template('form.html', form=form)
 
@@ -103,7 +103,7 @@ def register_view():
 def logout_view():
     login.logout_user()
     flash('You were logged out', 'info')
-    return redirect(url_for('index'))
+    return redirect(url_for('show_challenges'))
 
 
 # Init Flask-Login

@@ -37,7 +37,7 @@ def show_settings():
 
     if not login.current_user.is_authenticated():
         flash('You must be authenticated', 'error')
-        return redirect(url_for('index'), user=login.current_user)
+        return redirect(url_for('show_challenges'), user=login.current_user)
 
     form = SettingsForm(request.form)
     if form.validate_on_submit():

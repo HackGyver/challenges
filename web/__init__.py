@@ -24,7 +24,6 @@ webdb = SQLAlchemy(webapp)
 #   import web.database
 # It will import web.database which contains the definition models of the
 # database of the portal
-import web.main
 import web.database
 import web.login
 import web.challenges
