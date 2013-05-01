@@ -23,12 +23,25 @@
                     <a href="{{ url_for('show_challenge', id=challenge.id) }}">{{ challenge.title }}</a>
                 </td>
                 <td>
-                    categories
+                {% if challenge.categories %}
+                    {% for category in challenge.categories %}
+                    <a href="{{ url_for('show_category', name=category.name) }}">{{ category.name }}</a>
+                    {% endfor %}
+                {% else %}
+                    None
+                {% endif %}
                 </td>
                 <td>{{ challenge.level }}</td>
                 <td>{{ challenge.requirement }}</td>
                 <td>{{ challenge.url }}</td>
-                <td>{{ challenge.tags }}</td>
+                <td>
+                {% if challenge.tags %}
+                    {% for tag in challenge.tags %}
+                        {{ tag.label }}
+                    {% endfor %}
+                {% else %}
+                    None
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

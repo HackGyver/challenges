@@ -7,7 +7,7 @@
 
 from sets import Set
 from flask import request, render_template
-from flask.ext import wtf
+from flask.ext import wtf, login
 from web.database import Category, Challenge
 from web import webapp
 from web import webdb as db
@@ -51,6 +51,12 @@ def search():
     form = SearchForm(request.form)
     if form.validate_on_submit():
         results = form.apply_request()
-        return render_template('search.html', results=results)
+        return render_template('search.html',
+                results=results,
+                user=login.current_user
+        )
 
-    return render_template('form.html', form=form)
+    return render_template('form.html',
+            form=form,
+            user=login.current_user
+    )
