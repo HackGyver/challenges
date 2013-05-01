@@ -134,6 +134,7 @@ class ManageChallengeForm(wtf.Form):
         db.session.commit()
 
 
+@webapp.route('/categories/')
 @webapp.route('/challenges/')
 def show_challenges():
     """Query all the categories (which contains the challenges)"""
@@ -142,6 +143,18 @@ def show_challenges():
 
     return render_template('challenges.html',
             categories=categories,
+            user=login.current_user
+    )
+
+
+@webapp.route('/categories/<name>/')
+def show_category(name):
+    """Query one specific category"""
+
+    category = db.session.query(Category).filter(Category.name==name).first()
+
+    return render_template('challenges.html',
+            categories=[category],
             user=login.current_user
     )
 
