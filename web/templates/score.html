@@ -30,7 +30,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for validated in user.validated %}
+                            {% for validated in spe_user.validated %}
                             <tr>
                                 <td>
                                     <a href="{{ url_for('show_challenge', id=validated.id) }}">{{ validated.title }}</a>
