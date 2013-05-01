@@ -3,8 +3,6 @@
     <ul class="nav nav-list">
         <li class="nav-header">{{ user.username }}</li>
         <li><a href="{{ url_for('show_score', id=user.id) }}">Score</a></li>
-        <li><a href="#">Challenges</a></li>
-        <li class="divider"></li>
         <li><a href="{{ url_for('show_settings') }}">Settings</a></li>
     </ul>
 </div>

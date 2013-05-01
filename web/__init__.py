@@ -32,3 +32,4 @@ import web.challenges
 import web.admin
 import web.scores
 import web.search
+import web.user
