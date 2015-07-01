@@ -9,20 +9,21 @@
 import hashlib
 import time
 from flask import request, render_template, redirect, url_for, flash
-from flask.ext import wtf, login
+from wtforms import Form, TextField, validators, PasswordField
+from flask.ext import login
 from web import webapp
 from web import webdb as db
 from database import User
 
 
-class LoginForm(wtf.Form):
-    username = wtf.TextField('Username', [
-        wtf.validators.Required(),
-        wtf.validators.Length(max=64)
+class LoginForm(Form):
+    username = TextField('Username', [
+        validators.Required(),
+        validators.Length(max=64)
     ])
-    password = wtf.PasswordField('Password', [
-        wtf.validators.Required(),
-        wtf.validators.Length(max=256)
+    password = PasswordField('Password', [
+        validators.Required(),
+        validators.Length(max=256)
     ])
 
     def validate(self):
@@ -44,14 +45,14 @@ class LoginForm(wtf.Form):
         return db.session.query(User).filter_by(username=self.username.data).first()
 
 
-class RegistrationForm(wtf.Form):
-    username = wtf.TextField('Username', [
-        wtf.validators.Required(),
-        wtf.validators.Length(max=64)
+class RegistrationForm(Form):
+    username = TextField('Username', [
+        validators.Required(),
+        validators.Length(max=64)
     ])
-    password = wtf.PasswordField('Password', [
-        wtf.validators.Required(),
-        wtf.validators.Length(max=256)
+    password = PasswordField('Password', [
+        validators.Required(),
+        validators.Length(max=256)
     ])
 
     def validate(self):

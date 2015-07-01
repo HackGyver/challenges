@@ -8,49 +8,50 @@
 
 from ast import literal_eval
 from flask import request, render_template, redirect, url_for, flash
-from flask.ext import wtf, login
+from flask.ext import login
+from wtforms import Form, HiddenField, validators, TextField, TextAreaField, SelectField
 from web.database import Challenge, Category, Tag
 from web import webapp
 from web import webdb as db
 
 
-class ManageChallengeForm(wtf.Form):
-    id = wtf.HiddenField('', [
-        wtf.validators.Required()
+class ManageChallengeForm(Form):
+    id = HiddenField('', [
+        validators.Required()
     ])
-    title = wtf.TextField('Title', [
-        wtf.validators.Required(),
-        wtf.validators.Length(max=64)
+    title = TextField('Title', [
+        validators.Required(),
+        validators.Length(max=64)
     ])
-    description = wtf.TextAreaField('Description')
+    description = TextAreaField('Description')
     # TODO:
     #   -field must be a number
     #   -number must be a valid level value
-    level = wtf.SelectField('Level', [
-            wtf.validators.Required(),
-            wtf.validators.Length(max=1)
+    level = SelectField('Level', [
+            validators.Required(),
+            validators.Length(max=1)
         ],
         choices=[(i, i) for i in range(1, 6)],
     )
     # TODO:
     #   -field must be a number
     #   -number must be a valid challenge id
-    requirement = wtf.TextField('Requirement')
-    flag = wtf.TextField('Flag', [
-        wtf.validators.Required(),
-        wtf.validators.Length(max=256)
+    requirement = TextField('Requirement')
+    flag = TextField('Flag', [
+        validators.Required(),
+        validators.Length(max=256)
     ])
-    url = wtf.TextField('URL', [
-        wtf.validators.Required(),
-        wtf.validators.Length(max=256)
+    url = TextField('URL', [
+        validators.Required(),
+        validators.Length(max=256)
     ])
     # TODO: enable multiple selection
-    categories = wtf.SelectField('Categories',
+    categories = SelectField('Categories',
         choices=[(category.id, category.name) \
             for category in db.session.query(Category).all()]
     )
     # TODO: enable multiple selection
-    tags = wtf.SelectField('Tags',
+    tags = SelectField('Tags',
         choices=[(tag.id, tag.label) \
             for tag in db.session.query(Tag).all()]
     )
