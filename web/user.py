@@ -6,16 +6,18 @@
 """
 
 from flask import request, render_template, url_for, redirect, flash
-from flask.ext import wtf, login
+from flask.ext import login
+from flask.ext.wtf import Form
+from wtforms import PasswordField, validators
 from web import webapp
 from web import webdb as db
 from database import User, Challenge
 
 
-class SettingsForm(wtf.Form):
-    new_password = wtf.PasswordField('New password', [
-        wtf.validators.Required(),
-        wtf.validators.Length(max=256)
+class SettingsForm(Form):
+    new_password = PasswordField('New password', [
+        validators.Required(),
+        validators.Length(max=256)
     ])
 
     def validate(self):

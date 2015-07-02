@@ -7,19 +7,21 @@
 
 from sets import Set
 from flask import request, render_template
-from flask.ext import wtf, login
+from flask.ext import login
+from flask.ext.wtf import Form
+from wtforms import TextField, SelectField
 from web.database import Category, Challenge
 from web import webapp
 from web import webdb as db
 
 
-class SearchForm(wtf.Form):
-    challenges = wtf.TextField('Challenges')
-    categories = wtf.SelectField('Categories',
+class SearchForm(Form):
+    challenges = TextField('Challenges')
+    categories = SelectField('Categories',
             choices=[(category.id, category.name) \
                     for category in db.session.query(Category).all()]
     )
-    tags = wtf.TextField('Tags')
+    tags = TextField('Tags')
 
     def validate(self):
         return True
