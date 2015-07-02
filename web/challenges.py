@@ -9,7 +9,8 @@
 from ast import literal_eval
 from flask import request, render_template, redirect, url_for, flash
 from flask.ext import login
-from wtforms import Form, HiddenField, validators, TextField, TextAreaField, SelectField
+from flask.ext.wtf import Form
+from wtforms import HiddenField, validators, TextField, TextAreaField, SelectField
 from web.database import Challenge, Category, Tag
 from web import webapp
 from web import webdb as db

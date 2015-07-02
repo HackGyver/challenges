@@ -8,7 +8,8 @@
 from sets import Set
 from flask import request, render_template
 from flask.ext import login
-from wtforms import Form, TextField, SelectField
+from flask.ext.wtf import Form
+from wtforms import TextField, SelectField
 from web.database import Category, Challenge
 from web import webapp
 from web import webdb as db
