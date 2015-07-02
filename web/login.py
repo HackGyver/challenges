@@ -9,7 +9,8 @@
 import hashlib
 import time
 from flask import request, render_template, redirect, url_for, flash
-from wtforms import Form, TextField, validators, PasswordField
+from flask.ext.wtf import Form
+from wtforms import TextField, validators, PasswordField
 from flask.ext import login
 from web import webapp
 from web import webdb as db
